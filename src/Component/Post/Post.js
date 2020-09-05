@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './Post.css'
 import Comment from '../Comment/Comment';
-import Photo from '../Photo/Photo';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Photo from '../../Photo/Photo';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,36 +21,30 @@ const useStyles = makeStyles((theme) => ({
 
 const Post = () => {
     const { Id } = useParams();
+    let {postID} = useParams();
+    postID = Id
     const [post, setPost] = useState({})
     useEffect(() => {
         const url = `https://jsonplaceholder.typicode.com/posts/${Id}`
         fetch(url)
             .then(res => res.json())
             .then(data => setPost(data))
-    }, [])
+    }, []);
     const [comment, setComment] = useState([]);
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/comments')
+        const url = `https://jsonplaceholder.typicode.com/comments?postId=${postID}`
+        fetch(url)
             .then(res => res.json())
             .then(data => setComment(data))
     }, [])
-    const [photo, setPhoto] = useState([]);
-    useEffect(() => {
+    const[photo,setPhoto]=useState([])
+    useEffect(()=>{
         fetch('https://randomuser.me/api/?results=15&fbclid=IwAR2OhMWSjNcWpmFHUqm75NQfsB6g0DHWevl7fYpxRF0wQlgHIVmRQ9qXcuE')
-            .then(res => res.json())
-            .then(data => setPhoto(data.results))
-    }, [])
-
-
-
-    const relevantComment = comment.filter(object => parseInt(object.postId) === parseInt(Id))
-    let x = relevantComment.length;
-    console.log(x);
-    const relevantPhoto = photo.slice(1, x + 1)
-    console.log(relevantPhoto);
-
+        .then(res=>res.json())
+        .then(data=>setPhoto(data.results))
+    },[])
+    const photoArray = photo.slice(1,comment.length+1)
     const classes = useStyles();
-
     return (
 
         <div className="post">
@@ -60,16 +54,17 @@ const Post = () => {
                 <p>{post.body}</p>
             </div>
             <div className="comment-section">
+            <h1>Comments</h1>
                 <div className={classes.root}>
                     <Grid container>
-                        <Grid item xs={2}>
-                            <Paper className={classes.paper}> {
-                                relevantPhoto.map(photo => <Photo photo={photo}></Photo>)
+                        <Grid item  xs={3}>
+                            <Paper className={classes.paper}>{
+                                photoArray.map(photo => <Photo key={photo.id.value} photo={photo}></Photo>)
                             }</Paper>
                         </Grid>
-                        <Grid item xs={10}>
+                        <Grid item xs={9}>
                             <Paper className={classes.paper}>{
-                                relevantComment.map(comment => <Comment comment={comment}></Comment>)
+                                comment.map(comment => <Comment key={comment.id} photo={photo.url} comment={comment}></Comment>)
                             }</Paper>
                         </Grid>
 

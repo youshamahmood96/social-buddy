@@ -6,6 +6,7 @@ import './Interface.css';
 import Placeholder from '../Placeholder/Placeholder';
 import Newsfeed from '../Newsfeed/Newsfeed';
 import { Link } from 'react-router-dom';
+import FriendsList from '../FriendsList/FriendsList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,18 +48,21 @@ const classes = useStyles();
           </Grid>
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>
+            <h1>Posts</h1>
             
             {
-                newsfeed.map(feed=><Newsfeed feed={feed}></Newsfeed>)
+                newsfeed.map(feed=><Newsfeed key={feed.id} feed={feed}></Newsfeed>)
             }
-            
-            
-            
-            
             </Paper>
           </Grid>
           <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
+            <Paper className={classes.paper}>
+            <h1>Active Friends</h1>
+            {
+              friends.map(friends=><FriendsList key={friends.id} friends={friends}></FriendsList>)
+            }
+            
+            </Paper>
           </Grid>
         </Grid>
       </div>

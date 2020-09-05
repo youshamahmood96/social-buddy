@@ -16,9 +16,11 @@ function App() {
   return (
     <div>
       <Header></Header>
-      
       <Router>
       <Switch>
+      <Route path = '/home'>
+        <Interface></Interface>
+      </Route>
         <Route path='/posts/:Id' >
           <Post></Post>
         </Route>

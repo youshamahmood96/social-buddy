@@ -11,7 +11,7 @@ const Newsfeed = (props) => {
         <small>5 minutes ago</small>
         <br/>
         <p>{body}</p>
-        <Link to={`/posts/${id}`}>See More</Link>
+        <Button variant="contained" color="secondary"><Link to={`/posts/${id}`}>See More</Link></Button>
         
         </div>
         
