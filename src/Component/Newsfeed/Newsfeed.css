@@ -1,0 +1,11 @@
+.newsfeed{
+    border:1px solid lightgray;
+    margin-bottom:30px;
+    border-radius:10px;
+    text-align:left;
+    padding:10px;
+}
+Button{
+    margin-bottom:10px !important; 
+    padding:10px !important; 
+}

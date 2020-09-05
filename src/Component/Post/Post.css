@@ -1,0 +1,11 @@
+.post{
+    padding-left:50px;
+    padding-right:50px;
+    margin-left:50px;
+    margin-right:50px;
+    border:1px solid lightgray;
+}
+.comment-section{
+    margin-bottom:50px;
+    padding-bottom:50px !important;
+}
